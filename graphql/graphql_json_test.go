@@ -108,11 +108,15 @@ func TestDoJSONErr(t *testing.T) {
 	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
 	defer cancel()
 
-	var responseData map[string]interface{}
+	var responseData GraphResponse
 	err := client.Run(ctx, &Request{q: "query {}"}, &responseData)
 
 	is.True(err != nil)
 	is.Equal(err.Error(), "Something else went wrong: Something went wrong")
+
+	// This should contain the 2 error objects in the writestring above, but it's 0
+	// here.
+	is.Equal(2, len(responseData.Errors))
 }
 
 func TestHeader(t *testing.T) {
