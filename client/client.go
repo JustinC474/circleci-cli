@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/CircleCI-Public/circleci-cli/graphql"
+
 	"github.com/CircleCI-Public/circleci-cli/logger"
 	"github.com/CircleCI-Public/circleci-cli/version"
-	"github.com/circleci/graphql"
 )
 
 // NewClient returns a reference to a Client.
