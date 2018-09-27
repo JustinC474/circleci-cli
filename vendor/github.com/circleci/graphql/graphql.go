@@ -231,6 +231,10 @@ type ClientOption func(*Client)
 
 type GraphErr struct {
 	Message string
+
+	Value         string
+	AllowedValues []string
+	EnumType      string
 }
 
 func (e GraphErr) Error() string {
