@@ -107,7 +107,7 @@ func (c *Client) runWithJSON(ctx context.Context, req *Request, resp interface{}
 	}
 	c.logf(">> variables: %v", req.vars)
 	c.logf(">> query: %s", req.q)
-	gr := &graphResponse{
+	gr := &GraphResponse{
 		Data: resp,
 	}
 	r, err := http.NewRequest(http.MethodPost, c.endpoint, &requestBody)
@@ -173,7 +173,7 @@ func (c *Client) runWithPostFields(ctx context.Context, req *Request, resp inter
 	c.logf(">> variables: %s", variablesBuf.String())
 	c.logf(">> files: %d", len(req.files))
 	c.logf(">> query: %s", req.q)
-	gr := &graphResponse{
+	gr := &GraphResponse{
 		Data: resp,
 	}
 	r, err := http.NewRequest(http.MethodPost, c.endpoint, &requestBody)
@@ -229,20 +229,20 @@ func UseMultipartForm() ClientOption {
 // modify the behaviour of the Client.
 type ClientOption func(*Client)
 
-type graphErr struct {
+type GraphErr struct {
 	Message string
 }
 
-func (e graphErr) Error() string {
+func (e GraphErr) Error() string {
 	return "graphql: " + e.Message
 }
 
-type graphResponse struct {
+type GraphResponse struct {
 	Data   interface{}
-	Errors []graphErr
+	Errors []GraphErr
 }
 
-func (resp graphResponse) bundleErrors() error {
+func (resp GraphResponse) bundleErrors() error {
 	var err error
 
 	for _, graphqlError := range resp.Errors {
